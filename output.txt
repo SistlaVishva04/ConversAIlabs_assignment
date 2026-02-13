@@ -1,0 +1,27 @@
+1. Login:
+
+curl.exe -X POST http://localhost:3000/auth/login ^
+More?   -H "Content-Type: application/json" ^
+More?   -d "{\"email\":\"vishva@email.com\",\"password\":\"password123\"}"
+
+{"loginSessionId":"brj47syn"}
+
+2. OTP Verify:
+
+curl.exe -c cookies.txt -X POST http://localhost:3000/auth/verify-otp ^
+More?   -H "Content-Type: application/json" ^
+More?   -d "{\"loginSessionId\":\"brj47syn\",\"otp\":\"814602\"}"
+
+{"message":"OTP verified"}
+
+
+3. Protected:
+curl.exe -b cookies.txt -X POST http://localhost:3000/auth/token
+
+{"access_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZpc2h2YUBlbWFpbC5jb20iLCJzZXNzaW9uSWQiOiJicmo0N3N5biIsImlhdCI6MTc3MDk5ODU4NSwiZXhwIjoxNzcwOTk5NDg1fQ.jjW004NF2afcTS49SEBkDTSGPQIx0NKqJcyIyTZtgPk","expires_in":900}
+
+4. Access Protected Route
+curl.exe -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZpc2h2YUBlbWFpbC5jb20iLCJzZXNzaW9uSWQiOiJicmo0N3N5biIsImlhdCI6MTc3MDk5ODU4NSwiZXhwIjoxNzcwOTk5NDg1fQ.jjW004NF2afcTS49SEBkDTSGPQIx0NKqJcyIyTZtgPk" ^
+More? http://localhost:3000/protected
+
+{"message":"Access granted","user":{"email":"vishva@email.com","sessionId":"brj47syn","iat":1770998585,"exp":1770999485},"success_flag":"FLAG-dmlzaHZhQGVtYWlsLmNvbV9DT01QTEVURURfQVNTSUdOTUVOVA=="}
